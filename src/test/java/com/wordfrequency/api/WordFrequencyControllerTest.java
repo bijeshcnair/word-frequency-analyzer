@@ -39,6 +39,14 @@ class WordFrequencyControllerTest {
     }
 
     @Test
+    void frequency_for_word_rejects_non_letter_word() throws Exception {
+        mockMvc.perform(post("/api/word-frequency/frequency-for-word")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"text\":\"hello\",\"word\":\"hello!\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void highest_frequency_rejects_missing_text() throws Exception {
         mockMvc.perform(post("/api/word-frequency/highest-frequency")
                         .contentType(MediaType.APPLICATION_JSON)
